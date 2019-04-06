@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
   </head>
   <body>
+
+
     <!--Navigation bar-->
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fuild">
@@ -15,9 +17,34 @@
         <ul class="nav navbar-nav navbar-right">
           <!--Items for Navigation bar-->
             <!--Search bar-->
-          <div class="search-contain">
-              <input type="text" id="search" placeholder="Search">
+          <div id = "searchmove" class="search-contain">
+              <input type="text" placeholder="Search" onkeydown="shiftSearch()">
           </div>
+          <script>
+
+          function shiftSearch(){
+            shiftSearch = function(){};
+            var elem = document.getElementById("searchmove");
+            var pos = 0;
+  var id = setInterval(frame, 6);
+  function frame() {
+    if (pos == 35) {
+
+      clearInterval(id);
+    } else {
+      pos+=1;
+      elem.style.left = pos + "%";
+
+    }
+
+}
+
+
+}
+
+</script>
+
+
             <!--Buttons To Locations on NavBar-->
           <img id="Shopping" src="shoppingcart.svg" alt="Shopping">
           <img id="Home" src="homeicon.svg" alt="Home">
@@ -27,6 +54,7 @@
             <div class="menu">
   <svg class="shadow" width="375" height="322" viewBox="0 0 375 322">
     <defs>
+
       <filter
               id="blur"
               x="-0.053211679"
@@ -213,7 +241,16 @@
             <tr>
               <td><button type="button" id="ListSongPlay"><img src="play-button.svg" alt="playbutton"></button></td>
               <td><p>The Life of Pachanga</p></td>
-              <td><button type="button" id="Like"><img src="google_heart_button.svg" alt="likebutton" id="Likebutton"></button></td>
+              <td><button onclick="heartButtonActions()"type="button" id="Like"><img src="google_heart_button.svg" alt="likebutton" id="Likebutton"></button></td>
+              <script type="text/javascript">
+                function heartButtonActions(){
+                  makeHeartRed();
+                }
+                function makeHeartRed(){
+                  var x = document.getElementById("Likebutton");
+                    x.style.fill = "fb1414";
+                }
+              </script>
               <td><button type="button" id="shareButton"><img src="share-arrow.svg" alt="shareButton" id="shareButtonImg"></button></td>
               <td><button type="button" id="BuySong"><img id="BuySongImg" src="addshoppingcart.svg" alt="Shopping"></button></td>
               <td><p id=songTime>--:--</p></td>
@@ -243,25 +280,144 @@
   </div>
 <!--Music Control Elements-->
 <div class="Controls">
+  <audio autoplay class="fc-media" id="fill">
+    <source src="Sicko-Mode-Sample.mp3" type="audio/mpeg"/>
+  </audio>
   <div class="MusicControls">
     <!--Current Song's picture-->
     <img src="Album-Cover.jpg" alt="Album test">
     <!--Last Song Button--> <!--Make A "History" for the songs played so that when they click back it goes to the last song played-->
-    <button type="button" name="PreviousSong"><img src="next-page.svg" alt="previous song" /></button>
+    <button onclick="backActions()" type="button" name="PreviousSong"><img src="next-page.svg" alt="previous song" /></button>
+    <script type="text/javascript">
+    function backActions(){
+      back();
+      updateTime();
+    }
+    function back(){
+      var x = document.getElementById("playImg");
+      currentSong--;
+      if(currentSong < 0){
+        currentSong = 2;
+      }
+      playSong();
+      x.src = "pause-round-button.svg";
+    }
+    </script>
     <!--Play Song Button-->
-    <button onclick="hide()" type="button" id="Play"><img src="pause-round-button.svg" alt="playbutton"></button>
+    <button onclick="playButtonActions()" type="button" id="Play"><img id="playImg" src="play-button.svg" alt="playbutton"></button>
+    <script type="text/javascript">
+    function playButtonActions(){
+      playpause();
+      updateTime();
+    }
+    function updateTime(){
+      check();
+      updateTimeStamp();
+      totalTimeStamp();
+    }
+    function playpause(){
+      var x = document.getElementById("playImg");
+      if(song.paused){
+        song.play();
+        x.src = "pause-round-button.svg";
+      }else{
+        song.pause();
+        x.src = "play-button.svg";
+      }
+    }
+    </script>
     <!--Next Song Button-->
-    <button type="button" name="NextSong"><img src="next-page.svg" alt="nextsong"></button>
+    <button onclick="nextActions()" type="button" name="NextSong"><img src="next-page.svg" alt="nextsong"></button>
+    <script type="text/javascript">
+    function nextActions(){
+      next();
+      updateTime();
+    }
+      function next(){
+        var x = document.getElementById("playImg");
+        currentSong++;
+        if(currentSong > 2){
+          currentSong = 0;
+        }
+        playSong();
+        x.src = "pause-round-button.svg";
+      }
+    </script>
     <!--Seek bar-->
+    <div class="seekbar">
     <div id="seek-bar">
+      <!--<div id="seek-bar"></div>-->
+      <script type="text/javascript">
+        var bar = document.getElementById("seek-bar");
+        bar.addEventListener("click", clickedBar, false);
+        function clickedBar(e){
+          if(!song.ended){
+            var mouseX = e.pageX - bar.offsetLeft * 9.867;
+            var newTime = mouseX * song.duration / 250;
+            song.currentTime = newTime;
+            fillBar.style.width = mouseX / 10 + "px";
+          }
+        }
+      </script>
+      <span id="songTitle">Stuff</span>
       <span id="current-time">--:--</span>
+      <script type="text/javascript">
+      function updateTimeStamp(){
+      song.addEventListener("timeupdate", function(){
+        var c = Math.round(song.currentTime);
+        var hours   = Math.floor(c / 3600);
+        var minutes = Math.floor((c - (hours * 3600)) / 60);
+        var seconds = c - (hours * 3600) - (minutes * 60);
+        if (minutes < 10) {minutes = minutes;}
+        if (seconds < 10) {seconds = "0"+seconds;}
+        document.getElementById("current-time").innerHTML = minutes + ":" + seconds;
+      });}
+      </script>
       <span id="total-time">--:--</span>
-      <audio class+"fc-media" id="fill">
-        <source src="Sicko-Mode-Sample.mp3" type="audio/mpeg"/>
-      </audio>
+      <script type="text/javascript">
+      function totalTimeStamp(){
+        song.addEventListener("timeupdate", function(){
+        var total = Math.round(song.duration);
+        var hours   = Math.floor(total / 3600);
+        var minutes = Math.floor((total - (hours * 3600)) / 60);
+        var seconds = total - (hours * 3600) - (minutes * 60);
+        if (minutes < 10) {minutes = minutes;}
+        if (seconds < 10) {seconds = "0"+seconds;}
+        document.getElementById("total-time").innerHTML = minutes + ":" + seconds;
+      });}
+      </script>
+      <div id="progress"></div>
+      <script type="text/javascript">
+      function check(){
+      song.addEventListener("timeupdate", function(){
+        var position = song.currentTime / song.duration;
+        fillBar.style.width= position * 100 + '%';
+      });}
+      </script>
       <div id="handle"></div>
     </div>
   </div>
+</div>
+
+  <!--script for music player-->
+  <script type="text/javascript">
+  var songs = ["Sicko-Mode-Sample.mp3", "So Cool.mp3"];
+  var songTitle = document.getElementById("songTitle");
+  var fillBar = document.getElementById("progress");
+  var bar = document.getElementById("seek-bar");
+  var song = new Audio();
+  var currentSong = 0;
+  window.onload = playSong(), playNextAuto();
+  function playSong(){
+    song.src = songs[currentSong];
+    songTitle.textContent = songs[currentSong];
+    song.play();
+  }
+  function playNextAuto(){
+  song.addEventListener("ended", function(){
+    next();
+  });}
+  </script>
 </div>
 
   <div class="Social">

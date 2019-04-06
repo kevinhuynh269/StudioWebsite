@@ -31,6 +31,7 @@ body, html{
   transform: scale(1.1);
   top: 2.5%;
 }
+
 .navbar-default .navbar-nav img[id="Home"]{
   left: 80.28%;
   right: 15.39%;
@@ -85,6 +86,23 @@ body, html{
   color:  #898596;
   position: absolute;
 }
+
+#searchmove {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+
+}
+
+
+/*
+.search-contain{
+
+  left: 500px;
+  position: absolute;
+  width: 20px;
+}
+*/
 .menu {
   border-radius: 8px;
   height: 222px;
@@ -212,7 +230,6 @@ body, html{
   box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.25);
   border: none;
 }
-
 #SideBar {
   font-family: 'Poppins', sans-serif;
   text-align: center;
@@ -486,6 +503,7 @@ body, html{
   border: none;
   font-size: 18px;
 }
+
 #commentDivision{
   height: 1px;
   width: 385px;
@@ -541,7 +559,7 @@ body, html{
   top: 10px;
   border: none;
   background: transparent;
-  /*outline: none;*/
+  outline: none;
 }
 .MusicControls img[alt="playbutton"]{
   transform: translate(-1%, 3%);
@@ -556,7 +574,8 @@ body, html{
   left: 262px;
   top: 10px;
   border: none;
-  background: transparent
+  background: transparent;
+  outline: none;
 }
 .MusicControls img[alt="nextsong"]{
   transform: translate(0, 2%);
@@ -564,10 +583,11 @@ body, html{
 .MusicControls button{
   border-radius: 50%;
   cursor: pointer;
+  outline: none;
 }
 #seek-bar{
   width: 250px;
-  height: 1px;
+  height: 2px;
   background-color: white;
   border: .5px solid rgba(0, 0, 0, 1);
   display: flex;
@@ -577,18 +597,20 @@ body, html{
   margin-right: 50px;
   margin-top: -2.5px;
 }
-#fill{
-  height: 1px;
+#progress{
+  height: 3px;
   background-color: #fb1414;
   border-radius: 20px;
+  width: 0px;
+  margin-top: -.5px;
 }
 #handle{
-  width: 1px;
-  height: 1px;
+  width: 1.5px;
+  height: 1.5px;
   background-color: #fb1414;
   border-radius: 50%;
   margin-left: -3px;
-  margin-top: -1.5px;
+  margin-top: -.8px;
   transform: scale(2);
   padding: 1px;
   transition: all 150ms ease-in-out;
@@ -606,10 +628,17 @@ span{
   position: absolute;;
   bottom: 10px;
 }
+#songTitle{
+  width: 130px;
+  right: 33.3333%;
+  text-align: center;
+}
 #current-time{
+  font-size: 15px;
     left: 20;
   }
 #total-time{
+  font-size: 15px;
     right: 85px;
   }
 
